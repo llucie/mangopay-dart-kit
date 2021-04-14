@@ -7,7 +7,7 @@ class MangoSettings {
   final String clientId;
   final String cardPreregistrationId;
 
-  final String cardRegistrationURL;
+  final Uri cardRegistrationURL;
   final String preregistrationData;
   final String accessKey;
 
@@ -22,7 +22,7 @@ class MangoSettings {
 
   @override
   String toString() {
-    return 'MangoSettings(baseURL: $baseURL, clientId: $clientId, cardPreregistrationId: $cardPreregistrationId, cardRegistrationURL: $cardRegistrationURL, preregistrationData: $preregistrationData, accessKey: $accessKey)';
+    return 'MangoSettings(baseURL: $baseURL, clientId: $clientId, cardPreregistrationId: $cardPreregistrationId, cardRegistrationURL: ${cardRegistrationURL.path}, preregistrationData: $preregistrationData, accessKey: $accessKey)';
   }
 
   Map<String, dynamic> toMap() {
@@ -30,7 +30,7 @@ class MangoSettings {
       'baseURL': baseURL,
       'clientId': clientId,
       'cardPreregistrationId': cardPreregistrationId,
-      'cardRegistrationURL': cardRegistrationURL,
+      'cardRegistrationURL': cardRegistrationURL.path,
       'preregistrationData': preregistrationData,
       'accessKey': accessKey,
     };
@@ -43,7 +43,7 @@ class MangoSettings {
       baseURL: map['baseURL'],
       clientId: map['clientId'],
       cardPreregistrationId: map['cardPreregistrationId'],
-      cardRegistrationURL: map['cardRegistrationURL'],
+      cardRegistrationURL: Uri(path: map['cardRegistrationURL']),
       preregistrationData: map['preregistrationData'],
       accessKey: map['accessKey'],
     );
@@ -57,7 +57,7 @@ class MangoSettings {
     String baseURL,
     String clientId,
     String cardPreregistrationId,
-    String cardRegistrationURL,
+    Uri cardRegistrationURL,
     String preregistrationData,
     String accessKey,
   }) {
@@ -74,23 +74,23 @@ class MangoSettings {
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
+
     return o is MangoSettings &&
-      o.baseURL == baseURL &&
-      o.clientId == clientId &&
-      o.cardPreregistrationId == cardPreregistrationId &&
-      o.cardRegistrationURL == cardRegistrationURL &&
-      o.preregistrationData == preregistrationData &&
-      o.accessKey == accessKey;
+        o.baseURL == baseURL &&
+        o.clientId == clientId &&
+        o.cardPreregistrationId == cardPreregistrationId &&
+        o.cardRegistrationURL == cardRegistrationURL &&
+        o.preregistrationData == preregistrationData &&
+        o.accessKey == accessKey;
   }
 
   @override
   int get hashCode {
     return baseURL.hashCode ^
-      clientId.hashCode ^
-      cardPreregistrationId.hashCode ^
-      cardRegistrationURL.hashCode ^
-      preregistrationData.hashCode ^
-      accessKey.hashCode;
+        clientId.hashCode ^
+        cardPreregistrationId.hashCode ^
+        cardRegistrationURL.hashCode ^
+        preregistrationData.hashCode ^
+        accessKey.hashCode;
   }
 }

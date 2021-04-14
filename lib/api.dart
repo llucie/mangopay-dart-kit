@@ -2,12 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:mangopay_card/exceptions/mango_exception.dart';
 import 'package:mangopay_card/exceptions/mango_network_exception.dart';
 import 'package:mangopay_card/mango_card.dart';
 import 'package:mangopay_card/mango_settings.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:mangopay_card/models/card_registration.dart';
 
 class Api {
@@ -19,20 +18,17 @@ class Api {
     @required String cardPreregistrationId,
     @required String registrationData,
   }) async {
-    final String url =
-        '$baseUrl/v$_VERSION/$clientId/CardRegistrations/$cardPreregistrationId';
+    final Uri uri = Uri.parse('$baseUrl/v$_VERSION/$clientId/cardregistrations/$cardPreregistrationId');
 
     try {
       final Response cardRegisterResponse = await http.put(
-        url,
+        uri,
         body: {'RegistrationData': registrationData, 'Id': clientId},
       );
 
-      if (cardRegisterResponse.statusCode >= 400)
-        throw MangoException('101699', "CardRegistration error");
+      if (cardRegisterResponse.statusCode >= 400) throw MangoException('101699', "CardRegistration error");
 
-      final CardRegistration cardRegistration =
-          CardRegistration.fromJson(cardRegisterResponse.body);
+      final CardRegistration cardRegistration = CardRegistration.fromJson(cardRegisterResponse.body);
 
       if (cardRegistration.resultCode != "000000")
         throw MangoException.cardRegistration(
@@ -50,7 +46,6 @@ class Api {
 
   // https://docs.mangopay.com/endpoints/v2.01/cards#e1042_post-card-info
   static tokenRequest(MangoSettings settings, MangoCard card) async {
-    // response data=gcpSOxwNHZutpFWmFCAYQu1kk25qPfJFdPaHT9kM3gKumDF3GeqSw8f-k8nh-s5OC3GNnhGoF
     try {
       final Response tokenResponse = await http.post(
         settings.cardRegistrationURL,
@@ -66,8 +61,7 @@ class Api {
         },
       );
 
-      if (tokenResponse.statusCode >= 400)
-        throw MangoException.fromJson(tokenResponse.body);
+      if (tokenResponse.statusCode >= 400) throw MangoException.fromJson(tokenResponse.body);
 
       if (tokenResponse.body == null) throw MangoException.token('001599');
 
