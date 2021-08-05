@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:mangopay_card/exceptions/mango_exception.dart';
@@ -13,10 +12,10 @@ class Api {
   static const _VERSION = 2.01;
 
   static Future<CardRegistration> registerCard({
-    @required String baseUrl,
-    @required String clientId,
-    @required String cardPreregistrationId,
-    @required String registrationData,
+    required String baseUrl,
+    required String clientId,
+    required String cardPreregistrationId,
+    required String registrationData,
   }) async {
     final Uri uri = Uri.parse('$baseUrl/v$_VERSION/$clientId/cardregistrations/$cardPreregistrationId');
 
@@ -32,8 +31,8 @@ class Api {
 
       if (cardRegistration.resultCode != "000000")
         throw MangoException.cardRegistration(
-          cardRegistration.resultCode,
-          cardRegistration.resultMessage,
+          cardRegistration.resultCode ?? "",
+          cardRegistration.resultMessage ?? "",
         );
 
       return cardRegistration;
@@ -62,8 +61,6 @@ class Api {
       );
 
       if (tokenResponse.statusCode >= 400) throw MangoException.fromJson(tokenResponse.body);
-
-      if (tokenResponse.body == null) throw MangoException.token('001599');
 
       if (tokenResponse.body.indexOf('errorCode=') == 0)
         throw MangoException.token(

@@ -1,6 +1,5 @@
 library mangopay_card;
 
-import 'package:flutter/widgets.dart';
 import 'package:mangopay_card/api.dart';
 import 'package:mangopay_card/mango_card.dart';
 import 'package:mangopay_card/mango_settings.dart';
@@ -11,14 +10,13 @@ class MangoPay {
   final MangoCard mangoCard;
 
   MangoPay({
-    @required this.mangoSettings,
-    @required this.mangoCard,
+    required this.mangoSettings,
+    required this.mangoCard,
   });
 
   // @throws MangoException
   // @throws ValidationException
   Future<CardRegistration> registerCard() async {
-    
     // @throws ValidationException
     mangoCard.assertCardIsValid();
 

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 class MangoSettings {
   final String baseURL;
   final String clientId;
@@ -12,17 +10,19 @@ class MangoSettings {
   final String accessKey;
 
   MangoSettings({
-    @required this.baseURL,
-    @required this.clientId,
-    @required this.cardPreregistrationId,
-    @required this.cardRegistrationURL,
-    @required this.preregistrationData,
-    @required this.accessKey,
+    required this.baseURL,
+    required this.clientId,
+    required this.cardPreregistrationId,
+    required this.cardRegistrationURL,
+    required this.preregistrationData,
+    required this.accessKey,
   });
 
   @override
   String toString() {
-    return 'MangoSettings(baseURL: $baseURL, clientId: $clientId, cardPreregistrationId: $cardPreregistrationId, cardRegistrationURL: ${cardRegistrationURL.path}, preregistrationData: $preregistrationData, accessKey: $accessKey)';
+    return 'MangoSettings(baseURL: $baseURL, clientId: $clientId, cardPreregistrationId: $cardPreregistrationId, '
+        'cardRegistrationURL: ${cardRegistrationURL.path}, preregistrationData: $preregistrationData, '
+        'accessKey: $accessKey)';
   }
 
   Map<String, dynamic> toMap() {
@@ -37,8 +37,6 @@ class MangoSettings {
   }
 
   factory MangoSettings.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return MangoSettings(
       baseURL: map['baseURL'],
       clientId: map['clientId'],
@@ -54,12 +52,12 @@ class MangoSettings {
   factory MangoSettings.fromJson(String source) => MangoSettings.fromMap(json.decode(source));
 
   MangoSettings copyWith({
-    String baseURL,
-    String clientId,
-    String cardPreregistrationId,
-    Uri cardRegistrationURL,
-    String preregistrationData,
-    String accessKey,
+    String? baseURL,
+    String? clientId,
+    String? cardPreregistrationId,
+    Uri? cardRegistrationURL,
+    String? preregistrationData,
+    String? accessKey,
   }) {
     return MangoSettings(
       baseURL: baseURL ?? this.baseURL,
